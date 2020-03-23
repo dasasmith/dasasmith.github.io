@@ -6,7 +6,7 @@
 
  .masthead {
     height: 100vh;
-    min-height: 500px;
+    max-height: 500px;
     background-image: url('/images/halfdome.jpg');
     background-size: cover;
     background-position: center;
