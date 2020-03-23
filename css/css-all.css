@@ -3,9 +3,19 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
  */
+
+ .masthead {
+    height: 100vh;
+    min-height: 500px;
+    background-image: url('images/halfdome.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+ /* 
  header {
     padding: 156px 0 100px;
-  }
+  }*/
   
   section {
     padding: 150px 0;
