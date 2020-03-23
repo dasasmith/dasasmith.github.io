@@ -1,10 +1,4 @@
-/*!
- * Start Bootstrap - Scrolling Nav (https://startbootstrap.com/template-overviews/scrolling-nav)
- * Copyright 2013-2019 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
- */
-
- .masthead {
+.masthead {
     height: 100vh;
     max-height: 500px;
     background-image: url('/images/halfdome.jpg');
@@ -12,12 +6,8 @@
     background-position: center;
     background-repeat: no-repeat;
   }
- /* 
- header {
-    padding: 156px 0 100px;
-  }*/
   
-  section {
+section {
     padding: 150px 0;
   }
   
