@@ -1,66 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Drum Kit</title>
-  <link rel="stylesheet" href="css/P1.css">
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>JS Drum Kit</title>
+		<link rel="stylesheet" href="css/P1.css">
+	</head>
 <body>
 
 
-  <div class="keys">
-    <div data-key="65" class="key">
-      <kbd>A</kbd>
-      <span class="sound">clap</span>
-    </div>
-    <div data-key="83" class="key">
-      <kbd>S</kbd>
-      <span class="sound">hihat</span>
-    </div>
-    <div data-key="68" class="key">
-      <kbd>D</kbd>
-      <span class="sound">kick</span>
-    </div>
-    <div data-key="70" class="key">
-      <kbd>F</kbd>
-      <span class="sound">openhat</span>
-    </div>
-    <div data-key="71" class="key">
-      <kbd>G</kbd>
-      <span class="sound">boom</span>
-    </div>
-    <div data-key="72" class="key">
-      <kbd>H</kbd>
-      <span class="sound">ride</span>
-    </div>
-    <div data-key="74" class="key">
-      <kbd>J</kbd>
-      <span class="sound">snare</span>
-    </div>
-    <div data-key="75" class="key">
-      <kbd>K</kbd>
-      <span class="sound">tom</span>
-    </div>
-    <div data-key="76" class="key">
-      <kbd>L</kbd>
-      <span class="sound">tink</span>
-    </div>
-  </div>
+	<div class="keys">
+		<div data-key="65" class="key">
+			<kbd data-key="65">A</kbd>
+			<span data-key="65" class="sound">clap</span>
+		</div>
+		<div data-key="83" class="key">
+			<kbd data-key="83">S</kbd>
+			<span data-key="83" class="sound">hihat</span>
+		</div>
+		<div data-key="68" class="key">
+			<kbd data-key="68">D</kbd>
+			<span data-key="68" class="sound">kick</span>
+		</div>
+		<div data-key="70" class="key">
+			<kbd data-key="70">F</kbd>
+			<span data-key="70" class="sound">openhat</span>
+		</div>
+		<div data-key="71" class="key">
+			<kbd data-key="71">G</kbd>
+			<span data-key="71" class="sound">boom</span>
+		</div>
+		<div data-key="72" class="key">
+			<kbd data-key="72">H</kbd>
+			<span data-key="72" class="sound">ride</span>
+		</div>
+		<div data-key="74" class="key">
+			<kbd data-key="74">J</kbd>
+			<span data-key="74" class="sound">snare</span>
+		</div>
+		<div data-key="75" class="key">
+			<kbd data-key="75">K</kbd>
+			<span data-key="75" class="sound">tom</span>
+		</div>
+		<div data-key="76" class="key">
+			<kbd data-key="76">L</kbd>
+			<span data-key="76" class="sound">tink</span>
+		</div>
+	</div>
 
-  <audio data-key="65" src="sounds/clap.wav"></audio>
-  <audio data-key="83" src="sounds/hihat.wav"></audio>
-  <audio data-key="68" src="sounds/kick.wav"></audio>
-  <audio data-key="70" src="sounds/openhat.wav"></audio>
-  <audio data-key="71" src="sounds/boom.wav"></audio>
-  <audio data-key="72" src="sounds/ride.wav"></audio>
-  <audio data-key="74" src="sounds/snare.wav"></audio>
-  <audio data-key="75" src="sounds/tom.wav"></audio>
-  <audio data-key="76" src="sounds/tink.wav"></audio>
+	<audio data-key="65" src="sounds/clap.wav"></audio>
+	<audio data-key="83" src="sounds/hihat.wav"></audio>
+	<audio data-key="68" src="sounds/kick.wav"></audio>
+	<audio data-key="70" src="sounds/openhat.wav"></audio>
+	<audio data-key="71" src="sounds/boom.wav"></audio>
+	<audio data-key="72" src="sounds/ride.wav"></audio>
+	<audio data-key="74" src="sounds/snare.wav"></audio>
+	<audio data-key="75" src="sounds/tom.wav"></audio>
+	<audio data-key="76" src="sounds/tink.wav"></audio>	
 
 <script>
-window.addEventListener('keydown',function(e) {
-  console.log(e)
-});
+	function PlaySoundKeyDown(kd) {
+		const audio = document.querySelector(`audio[data-key='${kd.keyCode}']`); // selects audio file using keyCode based on EventListener
+
+		const key = document.querySelector(`.key[data-key='${kd.keyCode}']`); // selects key dic using keyCode based on EventListener
+		//const keys = document.querySelector(`.keys`);
+
+		//if (!audio) keys.classList.add('playing'); // doesn't play audio if keyCode doesn't exist; 
+		if (!audio) return;
+		
+		audio.currentTime = 0; //rewinds sound to start
+		audio.play(); // plays audio clip
+		key.classList.add('playing'); // adds .playing to .key give with data-key = keyCode
+	};
+
+	function PlaySoundClick(c) {
+		const audio = document.querySelector(`audio[data-key='${c.target.dataset.key}']`); // selects audio file using keyCode based on EventListener
+
+		const key = document.querySelector(`.key[data-key='${c.target.dataset.key}']`); // selects key dic using keyCode based on EventListener
+		//const keys = document.querySelector(`.keys`);
+
+		//if (!audio) keys.classList.add('playing'); // doesn't play audio if keyCode doesn't exist; 
+		if (!audio) return;
+		
+		audio.currentTime = 0; //rewinds sound to start
+		audio.play(); // plays audio clip
+		key.classList.add('playing'); // adds .playing to .key give with data-key = keyCode
+	};
+
+
+
+	function RemoveTransition(t){
+		if (t.propertyName !== 'transform') return; // only wants Transform property
+		this.classList.remove('playing'); //removes playing class
+	};
+
+	const keys = document.querySelectorAll(`.key`); //adds list of all elements with .key class
+
+	keys.forEach(key => key.addEventListener(`click`,PlaySoundClick)); // Plays sound when a key is clicked
+	window.addEventListener('keydown', PlaySoundKeyDown); // plays sound when the correct key is struck
+	keys.forEach(key => key.addEventListener(`transitionend`,RemoveTransition)); // when any of the .key elements has an event listener or transition..
 
 </script>
 
