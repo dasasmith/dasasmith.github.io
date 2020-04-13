@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>JS Drum Kit</title>
-		<link rel="stylesheet" href="css/P1.css">
-	</head>
+
+<head>
+	<meta charset="UTF-8">
+	<title>JS Drum Kit</title>
+	<link rel="stylesheet" href="css/P1.css">
+</head>
+
 <body>
 
 
@@ -55,52 +57,51 @@
 	<audio data-key="72" src="sounds/ride.wav"></audio>
 	<audio data-key="74" src="sounds/snare.wav"></audio>
 	<audio data-key="75" src="sounds/tom.wav"></audio>
-	<audio data-key="76" src="sounds/tink.wav"></audio>	
+	<audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
-	function PlaySoundKeyDown(kd) {
-		const audio = document.querySelector(`audio[data-key='${kd.keyCode}']`); // selects audio file using keyCode based on EventListener
+	<script>
+		function PlaySoundKeyDown(kd) {
+			const audio = document.querySelector(`audio[data-key='${kd.keyCode}']`); // selects audio file using keyCode based on EventListener
 
-		const key = document.querySelector(`.key[data-key='${kd.keyCode}']`); // selects key dic using keyCode based on EventListener
-		//const keys = document.querySelector(`.keys`);
+			const key = document.querySelector(`.key[data-key='${kd.keyCode}']`); // selects key dic using keyCode based on EventListener
+			//const keys = document.querySelector(`.keys`);
 
-		//if (!audio) keys.classList.add('playing'); // doesn't play audio if keyCode doesn't exist; 
-		if (!audio) return;
-		
-		audio.currentTime = 0; //rewinds sound to start
-		audio.play(); // plays audio clip
-		key.classList.add('playing'); // adds .playing to .key give with data-key = keyCode
-	};
+			//if (!audio) keys.classList.add('playing'); // doesn't play audio if keyCode doesn't exist; 
+			if (!audio) return;
 
-	function PlaySoundClick(c) {
-		const audio = document.querySelector(`audio[data-key='${c.target.dataset.key}']`); // selects audio file using keyCode based on EventListener
+			audio.currentTime = 0; //rewinds sound to start
+			audio.play(); // plays audio clip
+			key.classList.add('playing'); // adds .playing to .key give with data-key = keyCode
+		};
 
-		const key = document.querySelector(`.key[data-key='${c.target.dataset.key}']`); // selects key dic using keyCode based on EventListener
-		//const keys = document.querySelector(`.keys`);
+		function PlaySoundClick(c) {
+			const audio = document.querySelector(`audio[data-key='${c.target.dataset.key}']`); // selects audio file using keyCode based on EventListener
 
-		//if (!audio) keys.classList.add('playing'); // doesn't play audio if keyCode doesn't exist; 
-		if (!audio) return;
-		
-		audio.currentTime = 0; //rewinds sound to start
-		audio.play(); // plays audio clip
-		key.classList.add('playing'); // adds .playing to .key give with data-key = keyCode
-	};
+			const key = document.querySelector(`.key[data-key='${c.target.dataset.key}']`); // selects key dic using keyCode based on EventListener
+			//const keys = document.querySelector(`.keys`);
 
+			//if (!audio) keys.classList.add('playing'); // doesn't play audio if keyCode doesn't exist; 
+			if (!audio) return;
 
-
-	function RemoveTransition(t){
-		if (t.propertyName !== 'transform') return; // only wants Transform property
-		this.classList.remove('playing'); //removes playing class
-	};
-
-	const keys = document.querySelectorAll(`.key`); //adds list of all elements with .key class
-
-	keys.forEach(key => key.addEventListener(`click`,PlaySoundClick)); // Plays sound when a key is clicked
-	window.addEventListener('keydown', PlaySoundKeyDown); // plays sound when the correct key is struck
-	keys.forEach(key => key.addEventListener(`transitionend`,RemoveTransition)); // when any of the .key elements has an event listener or transition..
-
-</script>
+			audio.currentTime = 0; //rewinds sound to start
+			audio.play(); // plays audio clip
+			key.classList.add('playing'); // adds .playing to .key give with data-key = keyCode
+		};
 
 
+
+		function RemoveTransition(t) {
+			if (t.propertyName !== 'transform') return; // only wants Transform property
+			this.classList.remove('playing'); //removes playing class
+		};
+
+		const keys = document.querySelectorAll(`.key`); //adds list of all elements with .key class
+
+		keys.forEach(key => key.addEventListener(`click`, PlaySoundClick)); // Plays sound when a key is clicked
+		window.addEventListener('keydown', PlaySoundKeyDown); // plays sound when the correct key is struck
+		keys.forEach(key => key.addEventListener(`transitionend`, RemoveTransition)); // when any of the .key elements has an event listener or transition..
+
+	</script>
 </body>
+
 </html>
