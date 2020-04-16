@@ -120,7 +120,7 @@
 	  	
 	  const hours = now.getHours(); // get hours
       const hoursDegrees = ((hours / 12) * 360) + 90; // set degrees for current rotate style (based on current hours)
-	  if (hours == 0) { // will be used if hours at 0 to avoid "jumpy" hand transition
+	  if (hours == 0 || hours == 12) { // will be used if hours at 0 to avoid "jumpy" hand transition
 			hourHand.style.transition = `all 0.0s`; 
       		hourHand.style.transform = `rotate(${hoursDegrees}deg)`; // setting rotate angle based on hours
 	  	} 
