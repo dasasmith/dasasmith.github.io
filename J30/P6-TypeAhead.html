@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="UTF-8">
+		<title>Type Ahead 👀</title>
+		<link rel="stylesheet" href="css/p6.css">
+		<link rel="stylesheet" href="css/J30.css">
+
+	</head>
+	<body>
+		
+		<div class="back"><a class="backlink" href="j30Home.html"><i class="far fa-hand-point-left fa-2x"></i><span
+			class="backtxt">Back to Dakota's J30 Project Home</span></a><!-- CSS in css/J30.css file-->
+		</div>
+
+		<form class="search-form">
+			<input type="text" class="search" placeholder="City or State">
+			<ul class="suggestions">
+				<li>Filter for a city</li>
+				<li>or a state</li>
+			</ul>
+		</form>
+
+		<script>
+			const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json'; //Top 1000 cities with 1000 populdations
+
+			const cities = []; // setting up cities variable
+
+			fetch(endpoint) // fetching data
+				.then(blob => blob.json()) // setting up as JSON
+				.then(data => cities.push(...data)) // adding data into array variable
+			
+			function findMatches(wordToMatch, cities) { // function that is called to search cities array and filter down the list to any that meet the searchbox
+				return cities.filter(place => {
+					const regex = new RegExp(wordToMatch, 'gi');
+					return place.city.match(regex) || place.state.match(regex) // checking for cities or states. 
+				});
+			}
+
+			function numberWithCommas(x){ // fancy function to add commas when appropriate for populations
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	
+			}
+
+			function displayMatches() { // function that is called by event listeners when the input is changed
+				const matchArray = findMatches(this.value, cities); // setting match array after cities is passed through findMatches function using search values
+
+				matchArray.sort(function(a, b){ // sort the returned list by city name to alpha sort
+					if(a.city< b.city) { return -1; }
+					if(a.city > b.city) { return 1; }
+					return 0;
+				})
+				
+				if(this.value!==''){ // checking if the searchbox is empty 
+
+					if (matchArray.length > 0) { // IF searchbox is NOT empty then checking if the search has any results
+
+						const html = matchArray.map(place => { // setting up the html for innerHTML publish
+								const regex = new RegExp(this.value, 'gi'); // search value
+								const cityName = place.city.replace(regex,`<span class = "hl">${this.value}</span>`); // replacing string in cities results with a span to add highlight
+								const stateName = place.state.replace(regex,`<span class = "hl">${this.value}</span>`); // replacing string in states results with a span to add highlight
+								const population = numberWithCommas(place.population); // running population numbers through comma formatting formula
+								return ` 
+									<li> 
+										<span class="name">${cityName}, ${stateName}</span>
+										<span class="population">${population}</span>
+									</li>
+								`; // returns each list item, with a state value
+						}).join(''); 
+						suggestions.innerHTML = html; // add list items to suggestions list under the input
+
+					} else { // if no matches
+						const value = `<span class="rhl">${this.value}</span>`; 
+						suggestions.innerHTML = `
+						<li> 
+							<span class="name">No City Matches '${value}'</span>
+						</li>
+						<li> 
+							<span class="name">No State Matches '${value}'</span>
+						</li>` // tell the user there is no city/state matches
+					}
+
+				} else {
+					suggestions.innerHTML = `
+						<li>Filter for a city</li>
+						<li>or a state</li>` // if searchbox is empty but user already tried something, bring up original prompts 
+				}
+
+			};
+
+			const searchInput = document.querySelector('.search'); //grab searchbox for event listeners
+
+			const suggestions = document.querySelector('.suggestions'); // grab UL to enter cities in with innerHTML command 
+
+			searchInput.addEventListener('change', displayMatches); // displayMatch function gets called when text is entered and clicked away
+
+			searchInput.addEventListener('keyup', displayMatches); // displayMatch function gets called when text is entered on ketstroke. Doing partial searches
+		</script>
+		<script src="https://kit.fontawesome.com/d5d73aba31.js" crossorigin="anonymous"></script>
+	</body>
+</html>
