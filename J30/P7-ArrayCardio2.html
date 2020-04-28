@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Array Cardio Day 2 💪💪</title>
+		<style>
+			h1,p {
+				text-align:center;
+			}
+			input {
+				font-size: 20px;
+				display: block;
+				height: 30px;
+				background-color: orangered;
+				border-radius: 5px;
+				color: whitesmoke;
+				margin: 10px;
+			}
+			#content {
+				background-color: dimgray;
+				color: white;
+				font-size: 18px;
+				padding: 20px;
+				margin: 10px;
+				border-radius: 10px;
+			}
+			input:hover {
+				color:orangered;
+				background-color:white;
+				border-color:orangered;
+			}
+		</style>
+		<link rel="stylesheet" href="css/J30.css">
+	</head>
+	<body>
+		<div class="back"><a class="backlink" href="j30Home.html"><i class="far fa-hand-point-left fa-2x"></i><span
+			class="backtxt">Back to Dakota's J30 Project Home</span></a><!-- CSS in css/J30.css file-->
+		</div>
+		<h1><em>Psst: have a look at the Javacript Console</em>💁</h1>
+		<p><a href="https://javascript.info/devtools">Click here if you need help getting to the Browser's Console.</a></p><br /><br /> <br />
+		<input type="button" value="Filter the list of inventors for those who were born in the 1500's - Array.prototype.filter()" id="project1">
+		<input type="button" value="Give us an array of the inventors first and last names - Array.prototype.map()" id="project2">
+		<input type="button" value="Sort the inventors by birthdate, oldest to youngest - Array.prototype.sort()" id="project3">
+		<input type="button" value="How many years did all the inventors live all together? - Array.prototype.reduce()" id="project4">
+		<input type="button" value="Sort the inventors by years lived - Array.prototype.sort()" id="project5">
+
+		<div id="content"></div>
+		<script>
+			// ## Array Cardio Day 2
+			
+			const people = [
+				{ name: 'Wes', year: 1988 },
+				{ name: 'Kait', year: 1986 },
+				{ name: 'Irv', year: 1970 },
+				{ name: 'Lux', year: 2015 }
+			];
+
+			let comments = [
+				{ text: 'Love this!', id: 523423 },
+				{ text: 'Super good', id: 823423 },
+				{ text: 'You are the best', id: 2039842 },
+				{ text: 'Ramen is my fav food ever', id: 123523 },
+				{ text: 'Nice Nice Nice!', id: 542328 }
+			];
+
+			
+			// Some and Every Checks
+			// Array.prototype.some() // is at least one person 19 or older?
+			// 1. Check to see if there is one object with currentyear - year is greater then or equal to 18. 
+			const project1 = people.some(person => ((new Date()).getFullYear()) - person.year >= 18);
+
+			// Array.prototype.every() // is everyone 19 or older?
+			// 2. Check to see if EVERY object with currentyear - year is greater then or equal to 18.
+			const project2 = people.every(person => ((new Date()).getFullYear()) - person.year >= 18);
+
+			//const comments2 = comments;
+			// Array.prototype.find()
+			// 3. Find the object within the array that has an id equal to 823423
+			const project3 = comments.find(blob => blob.id === 823423);
+
+			// Array.prototype.findIndex()
+			//4. Find the object's index within the array that has an id equal to 823423
+			const project4 = comments.findIndex(blob => blob.id === 823423);
+
+			// 5. Building a new array with objects that doesn't contains all comments but the comment selected in project 4
+			function project5(){
+
+				console.table(comments); //console current comments array
+				const project5 = [ // remove comment using findIndex
+					...comments.splice(0, project4),
+					...comments.splice(project4)
+				];
+				console.table(project5); //console update coments array
+
+				comments = [ // refresh comments array to original comments array
+					{ text: 'Love this!', id: 523423 },
+					{ text: 'Super good', id: 823423 },
+					{ text: 'You are the best', id: 2039842 },
+					{ text: 'Ramen is my fav food ever', id: 123523 },
+					{ text: 'Nice Nice Nice!', id: 542328 }
+				];
+			};
+
+			const inputs = document.querySelectorAll('input');
+			inputs.forEach(input => input.addEventListener("click", PrintResults));
+			document.getElementById("content").innerHTML = `Click a Button to see some code!`;
+
+			function PrintResults() {
+				console.log(this.id);
+				switch(this.id){
+					case 'project1':
+						console.clear();
+						console.log(project1);
+						document.getElementById("content").innerHTML = `const project1 = people.some(person => ((new Date()).getFullYear()) - person.year >= 18);`;
+						break;
+					case 'project2':
+						console.clear();
+						console.log(project2);
+						document.getElementById("content").innerHTML = 'const project2 = people.every(person => ((new Date()).getFullYear()) - person.year >= 18);';
+						break;
+					case 'project3':
+						console.clear();
+						console.log(project3);
+						document.getElementById("content").innerHTML = `const project3 = comments.find(blob => blob.id === 823423);`;
+						break;
+					case 'project4':
+						console.clear();
+						console.log(project4);
+						document.getElementById("content").innerHTML = `const project4 = comments.findIndex(blob => blob.id === 823423);`;
+						break;
+					case 'project5':
+						console.clear();
+						project5();
+						document.getElementById("content").innerHTML = `const newcomments = [<br />&emsp;...comments.splice(0, project4),<br />&emsp;...comments.splice(project4)<br />];`
+						break;
+					default:
+						console.log('Nothing selected');
+						break;
+				}
+
+				//console.log(`${submit}`);
+			};
+		</script>
+		<script src="https://kit.fontawesome.com/d5d73aba31.js" crossorigin="anonymous"></script>	
+	</body>
+</html>
